@@ -47,6 +47,30 @@ export const theme = createTheme({
       white: '#ECEEEF'
     },
     tonalOffset: 0.2
-  }
+  },
+  components: {
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          color: '#55595C',
+          backgroundColor: '#fff',
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: "#333333",
+        },
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
+      }
+    }
+  },
 });
 

@@ -1,8 +1,25 @@
 import React from 'react';
-import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
+import Login from '../components/Login';
+import Register from '../components/Register';
+
 const login = () => {
-  return <Paper>login</Paper>;
+  return (
+    <Box
+      sx={{
+        height: '100vh',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <Paper sx={{ width: '90%', maxWidth: '400px', padding: 3 }}>
+        <Login />
+      </Paper>
+    </Box>
+  );
 };
 
 export default login;
