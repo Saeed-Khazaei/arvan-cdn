@@ -15,14 +15,23 @@ const LoginComponent = () => {
         >
           Login
         </Typography>
-        <TextField id="email" label="Email" variant="outlined" fullWidth />
+        <TextField
+          id="email"
+          label="Email"
+          variant="outlined"
+          fullWidth
+          error={false}
+          helperText=""
+        />
         <TextField
           id="password"
           label="Password"
           variant="outlined"
           fullWidth
+          error={false}
+          helperText=""
         />
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" size="large">
           Login
         </Button>
         <Stack spacing={1} direction="row">
