@@ -5,7 +5,7 @@ import { getAllArticlesNextApi } from "../utils/endpoints";
 export default {
   async getAllArticles() {
     try {
-      const res = await axios.get(getAllArticlesNextApi);
+      const res = await axios.get<ArticlesRespone>(getAllArticlesNextApi);
       return res.data;
     } catch (error: any) {
       throw error.response.data
