@@ -12,3 +12,12 @@ export interface UserRegister {
     username: string;
   }
 }
+export interface UserResponse {
+  user: {
+    email: string;
+    username: string;
+    bio: null;
+    image: null;
+    token: string;
+  }
+}
