@@ -29,15 +29,15 @@ export const theme = createTheme({
       disabled: '#777777',
     },
     action: {
-      active: '#777777',
-      disabled: '#AAAAAA',
-      disabledBackground: '#333333',
-      // hover: '#FF0000',
-      hoverOpacity: 0.7,
-      focus: '#FF0044',
-      focusOpacity: 1,
-      selected: '#FF0066',
-      selectedOpacity: 1
+      // active: '#777777',
+      // disabled: '#AAAAAA',
+      // disabledBackground: '#333333',
+      // // hover: '#FF0000',
+      // hoverOpacity: 0.7,
+      // focus: '#FF0044',
+      // focusOpacity: 1,
+      // selected: '#FF0066',
+      // selectedOpacity: 1
     },
     background: {
       default: '#ECEEEF',
@@ -87,6 +87,13 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           // whiteSpace: 'nowrap'
+        }
+      }
+    },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          color: 'inherit'
         }
       }
     }
