@@ -1,16 +1,16 @@
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { UserLogin } from '../../../models/auth';
+import { UserLogin, UserResponse } from '../../../models/auth';
 import { postLoginUser } from '../../../utils/endpoints';
+import { setCookie } from 'cookies-next';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   let model: UserLogin = req.body;
-
   try {
-    const resp = await axios.post(postLoginUser, model,
+    const { data } = await axios.post<UserResponse>(postLoginUser, model,
       {
         headers: {
           'content-type': 'application/json',
@@ -18,7 +18,14 @@ export default async function handler(
         }
       }
     );
-    const data = await resp.data;
+    setCookie('userToken', data.user.token, {
+      req,
+      res,
+      path: '/',
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 60,
+      sameSite: 'lax',
+    })
     res.status(200).json(data)
   } catch (error: any) {
     const data = error.response.data.errors ?? error.response.statusText;
