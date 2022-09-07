@@ -10,6 +10,7 @@ import {
 import Link from 'next/link';
 import user from '../services/user/user';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { useRouter } from 'next/router';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -19,6 +20,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 const LoginComponent = () => {
+  const router = useRouter();
   const [showSnackBar, setSnackBar] = useState({
     open: false,
     errorMessage: '',
@@ -69,7 +71,7 @@ const LoginComponent = () => {
         user: { email: email.value, password: password.value },
       });
       setLoading(false);
-      console.log('res', res);
+      router.push('/');
     } catch (error: any) {
       setLoading(false);
       if (error.email) {
