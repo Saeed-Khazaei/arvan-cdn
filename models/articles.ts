@@ -9,8 +9,8 @@ export interface Article {
   description: string;
   body: string;
   tagList: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   favorited: boolean;
   favoritesCount: number;
   author: Author;
