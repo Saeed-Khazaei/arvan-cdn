@@ -20,18 +20,19 @@ export const theme = createTheme({
       main: '#F0AD4E',
     },
     info: {
-      main: '#56C0E0'
+      main: '#56C0E0',
+      contrastText: "#ffffff"
     },
     text: {
       primary: '#373A3C',
       secondary: '#FFFFFF',
-      disabled: '#777777'
+      disabled: '#777777',
     },
     action: {
       active: '#777777',
       disabled: '#AAAAAA',
       disabledBackground: '#333333',
-      hover: '#FF0000',
+      // hover: '#FF0000',
       hoverOpacity: 0.7,
       focus: '#FF0044',
       focusOpacity: 1,
@@ -40,7 +41,7 @@ export const theme = createTheme({
     },
     background: {
       default: '#ECEEEF',
-      paper: '#DDDDDD'
+      // paper: '#DDDDDD'
     },
     common: {
       black: '#55595C',
@@ -69,6 +70,24 @@ export const theme = createTheme({
         root: {
           textTransform: 'none',
         },
+      }
+    },
+    MuiTableHead: {
+      styleOverrides: {
+        root: {
+          background: '#DDDDDD',
+          '& .MuiTableCell-root': {
+            fontWeight: 600,
+            color: '#55595C'
+          }
+        }
+      }
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          // whiteSpace: 'nowrap'
+        }
       }
     }
   },
