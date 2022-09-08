@@ -8,6 +8,7 @@ export const postLoginUser = `${api_url}/users/login`;
 export const getAllArticlesUrl = `${api_url}/articles`;
 export const deleteArticleUrl = `${api_url}/articles`;
 export const getArticleUrl = `${api_url}/articles`;
+export const updateArticleUrl = `${api_url}/articles`;
 export const getTagsUrl = `${api_url}/tags`;
 
 // Next server endpoints
@@ -18,4 +19,5 @@ export const postLoginUserNextApi = `${next_url}/api/user/login`;
 export const getAllArticlesNextApi = `${next_url}/api/articles/all`;
 export const deleteArticleNextApi = `${next_url}/api/articles/delete`;
 export const getArticleNextApi = `${next_url}/api/articles/get`;
+export const updateArticleNextApi = `${next_url}/api/articles/update`;
 export const getTagsNextApi = `${next_url}/api/tags`;

@@ -22,3 +22,11 @@ export interface Author {
   image: string;
   following: boolean;
 }
+
+
+export interface ArticleUpdate {
+  title?: string;
+  description?: string;
+  body?: string;
+  tagList?: string[];
+}

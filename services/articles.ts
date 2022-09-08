@@ -1,6 +1,6 @@
 import axios from "axios";
-import { Article, ArticlesRespone } from "../models/articles";
-import { deleteArticleNextApi, getAllArticlesNextApi, getArticleNextApi } from "../utils/endpoints";
+import { Article, ArticlesRespone, ArticleUpdate } from "../models/articles";
+import { deleteArticleNextApi, getAllArticlesNextApi, getArticleNextApi, updateArticleNextApi } from "../utils/endpoints";
 
 export default {
   async getAllArticles() {
@@ -21,7 +21,15 @@ export default {
   },
   async getArticle(slug: string) {
     try {
-      const res = await axios.get<Article>(`${getArticleNextApi}?slug=${slug}`);
+      const res = await axios.get<{ article: Article }>(`${getArticleNextApi}?slug=${slug}`);
+      return res.data;
+    } catch (error: any) {
+      throw error.response.data
+    }
+  },
+  async updateArticle(slug: string, body: ArticleUpdate) {
+    try {
+      const res = await axios.put<{ article: Article }>(`${updateArticleNextApi}?slug=${slug}`, { ...body });
       return res.data;
     } catch (error: any) {
       throw error.response.data
