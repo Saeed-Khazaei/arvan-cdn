@@ -49,7 +49,7 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
   );
 };
 
-const DeleteDialog = () => {
+const DeleteDialog = (props: { id: string }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -57,6 +57,15 @@ const DeleteDialog = () => {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const onDeleteArticle = async () => {
+    try {
+      console.log('props.id', props.id);
+      handleClose();
+    } catch (error: any) {
+      console.log('error', error.message);
+    }
   };
 
   return (
@@ -88,7 +97,7 @@ const DeleteDialog = () => {
             autoFocus
             variant="contained"
             color="error"
-            onClick={handleClose}
+            onClick={onDeleteArticle}
           >
             Yes
           </Button>

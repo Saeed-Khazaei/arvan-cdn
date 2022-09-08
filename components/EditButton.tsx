@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Divider from '@mui/material/Divider';
 import DeleteDialog from './DeleteDialog';
+import Link from 'next/link';
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -49,7 +50,7 @@ const StyledMenu = styled((props: MenuProps) => (
   },
 }));
 
-const EditButton = () => {
+const EditButton = (props: { id: string }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -83,11 +84,15 @@ const EditButton = () => {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose} disableRipple>
-          Edit
-        </MenuItem>
+        <Link href={`/articles/edit/${props.id}`}>
+          <a>
+            <MenuItem onClick={handleClose} disableRipple>
+              Edit
+            </MenuItem>
+          </a>
+        </Link>
         <Divider sx={{ my: 0.5 }} />
-        <DeleteDialog />
+        <DeleteDialog id={props.id} />
       </StyledMenu>
     </div>
   );

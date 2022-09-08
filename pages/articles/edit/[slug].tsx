@@ -31,6 +31,7 @@ const EditSlug = () => {
               fullWidth
               error={false}
               helperText={''}
+              placeholder="Title"
               // onChange={onChangeUsername}
             />
             <TextField
@@ -41,6 +42,7 @@ const EditSlug = () => {
               fullWidth
               error={false}
               helperText={''}
+              placeholder="Description"
               // onChange={onChangeUsername}
             />
             <TextField
@@ -65,6 +67,7 @@ const EditSlug = () => {
               fullWidth
               error={false}
               helperText={''}
+              placeholder="New tag"
               // onChange={onChangeUsername}
             />
             <Card variant="outlined">

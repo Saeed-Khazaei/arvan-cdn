@@ -36,7 +36,7 @@ const index: NextPage = () => {
           All Posts
         </Typography>
         <Box>
-          <ArticlesTable />
+          <ArticlesTable articles={articlesData} />
         </Box>
         <Box
           sx={{
