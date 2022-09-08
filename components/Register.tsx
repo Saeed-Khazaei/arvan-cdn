@@ -2,29 +2,27 @@ import React, { useState } from 'react';
 import {
   Button,
   CircularProgress,
-  Snackbar,
   Stack,
   TextField,
   Typography,
 } from '@mui/material';
 import Link from 'next/link';
 import user from '../services/user/user';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { useRouter } from 'next/router';
-
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import { NotificationType } from '../models/notification';
+import Notification from './Notification';
 
 const Register = () => {
   const router = useRouter();
-  const [showSnackBar, setSnackBar] = useState({
+  const [showSnackBar, setSnackBar] = useState<NotificationType>({
     open: false,
-    errorMessage: '',
+    message: '',
+    mainMessage: '',
+    type: 'success',
   });
+  const handleCloseSnackBar = () => {
+    setSnackBar({ open: false, message: '', mainMessage: '', type: 'error' });
+  };
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState({
     value: '',
@@ -68,16 +66,6 @@ const Register = () => {
     });
   };
 
-  const handleCloseSnackBar = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setSnackBar({ open: false, errorMessage: '' });
-  };
-
   const onLogin = async () => {
     try {
       setLoading(true);
@@ -98,7 +86,12 @@ const Register = () => {
           isError: true,
           errorMessage: error.email[0],
         });
-        setSnackBar({ open: true, errorMessage: 'Email ' + error.email[0] });
+        setSnackBar({
+          open: true,
+          message: 'Email ' + error.email[0],
+          mainMessage: 'Login Faild!',
+          type: 'error',
+        });
       }
       if (error.username) {
         setUsername({
@@ -106,9 +99,12 @@ const Register = () => {
           isError: true,
           errorMessage: error.username[0],
         });
+
         setSnackBar({
           open: true,
-          errorMessage: 'Username ' + error.username[0],
+          message: 'Username ' + error.username[0],
+          mainMessage: 'Login Faild!',
+          type: 'error',
         });
       }
       if (error.password) {
@@ -119,7 +115,9 @@ const Register = () => {
         });
         setSnackBar({
           open: true,
-          errorMessage: 'Password ' + error.password[0],
+          message: 'Password ' + error.password[0],
+          mainMessage: 'Login Faild!',
+          type: 'error',
         });
       }
       console.log('error', error);
@@ -128,23 +126,13 @@ const Register = () => {
 
   return (
     <>
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      <Notification
         open={showSnackBar.open}
-        autoHideDuration={6000}
+        message={showSnackBar.message}
+        mainMessage={showSnackBar.mainMessage}
+        type={showSnackBar.type}
         onClose={handleCloseSnackBar}
-      >
-        <Alert
-          onClose={handleCloseSnackBar}
-          severity="error"
-          sx={{ width: '100%' }}
-        >
-          <Typography variant="body1" component="span">
-            Register Faild!
-          </Typography>{' '}
-          {showSnackBar.errorMessage}
-        </Alert>
-      </Snackbar>
+      />
       <Stack spacing={3}>
         <Typography
           variant="h3"

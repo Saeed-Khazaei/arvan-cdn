@@ -16,14 +16,8 @@ import { Article, ArticleUpdate } from '../models/articles';
 import articles from '../services/articles';
 import { useRouter } from 'next/router';
 import tags from '../services/tags';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
-
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import { NotificationType } from '../models/notification';
+import Notification from './Notification';
 
 const EditArticle = (props: {
   articleData: Article;
@@ -31,18 +25,14 @@ const EditArticle = (props: {
   create: boolean;
 }) => {
   const router = useRouter();
-  const [showSnackBar, setSnackBar] = useState({
+  const [showSnackBar, setSnackBar] = useState<NotificationType>({
     open: false,
     message: '',
+    mainMessage: '',
+    type: 'success',
   });
-  const handleCloseSnackBar = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setSnackBar({ open: false, message: '' });
+  const handleCloseSnackBar = () => {
+    setSnackBar({ open: false, message: '', mainMessage: '', type: 'error' });
   };
   const [tagText, setTagText] = useState('');
   const [loadingOnSave, setLoadingOnSave] = useState(false);
@@ -167,7 +157,10 @@ const EditArticle = (props: {
         setSnackBar({
           open: true,
           message: 'Article updated successfly',
+          mainMessage: 'Well done!',
+          type: 'success',
         });
+
         if (props.slug !== res.article.slug) {
           router.push({
             pathname: `/articles/edit/${res.article.slug}`,
@@ -214,6 +207,8 @@ const EditArticle = (props: {
       setSnackBar({
         open: true,
         message: 'Article created successfly',
+        mainMessage: 'Well done!',
+        type: 'success',
       });
     } catch (error: any) {
       setLoadingOnSave(false);
@@ -247,23 +242,13 @@ const EditArticle = (props: {
 
   return (
     <>
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      <Notification
         open={showSnackBar.open}
-        autoHideDuration={6000}
+        message={showSnackBar.message}
+        mainMessage={showSnackBar.mainMessage}
+        type={showSnackBar.type}
         onClose={handleCloseSnackBar}
-      >
-        <Alert
-          onClose={handleCloseSnackBar}
-          severity="success"
-          sx={{ width: '100%' }}
-        >
-          <Typography variant="body1" component="span">
-            Well done!
-          </Typography>{' '}
-          {showSnackBar.message}
-        </Alert>
-      </Snackbar>
+      />
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={6}>
         <Stack sx={{ flex: 9 }} spacing={3}>
           <TextField
