@@ -8,10 +8,11 @@ import IconButton from '@mui/material/IconButton';
 import Sidebar from './Sidebar';
 import Drawer from '@mui/material/Drawer';
 import Link from 'next/link';
+import { Stack } from '@mui/material';
 
-const Layout = (props: { children: React.ReactNode }) => {
+const Layout = (props: { children: React.ReactNode; user: string }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
-
+  console.log('props.user', props.user);
   const toggleDrawer = () => {
     setOpenSidebar(!openSidebar);
   };
@@ -41,12 +42,18 @@ const Layout = (props: { children: React.ReactNode }) => {
               ☰
             </IconButton>
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h6" component="span" mr={2}>
-                Arvan Challenge
-              </Typography>
-              <Typography variant="body1" component="span">
-                Welcome Saeed Khazaei
-              </Typography>
+              <Stack
+                direction={{ sx: 'column', sm: 'row' }}
+                alignItems={{ sx: 'flex-start', sm: 'center' }}
+                spacing={{ sx: 1, sm: 2 }}
+              >
+                <Typography variant="h6" component="span">
+                  Arvan Challenge
+                </Typography>
+                <Typography variant="body1" component="span">
+                  Welcome {props.user}
+                </Typography>
+              </Stack>
             </Box>
             <Link href="/login">
               <a>

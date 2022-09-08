@@ -6,8 +6,8 @@ export async function getServerSideProps(ctx: any) {
   return checkUser(ctx, true);
 }
 
-const Home: NextPage = () => {
-  return <Layout>index</Layout>;
+const Home: NextPage<{ userName: string }> = (props) => {
+  return <Layout user={props.userName}>index</Layout>;
 };
 
 export default Home;

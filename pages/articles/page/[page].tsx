@@ -6,7 +6,7 @@ export async function getServerSideProps(ctx: any) {
   return checkUser(ctx);
 }
 
-const Page: NextPage = () => {
+const Page: NextPage<{ userName: string }> = (props) => {
   return <div>[page]</div>;
 };
 

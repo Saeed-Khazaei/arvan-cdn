@@ -1,16 +1,14 @@
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { UserLogin, UserResponse } from '../../../models/auth';
-import { getUser, postLoginUser } from '../../../utils/endpoints';
-import { getCookie, setCookie } from 'cookies-next';
+import { UserResponse } from '../../../models/auth';
+import { getUser } from '../../../utils/endpoints';
+import { getCookie } from 'cookies-next';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const token = getCookie('userToken', { req, res })
-  console.log('token', token)
-
   try {
     const { data } = await axios.get<UserResponse>(getUser,
       {

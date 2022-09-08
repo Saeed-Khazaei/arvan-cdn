@@ -11,7 +11,7 @@ export async function getServerSideProps(ctx: any) {
   return checkUser(ctx);
 }
 
-const index: NextPage = () => {
+const index: NextPage<{ userName: string }> = (props) => {
   const [articlesData, setArticlesData] = useState<Article[]>([]);
   const [articlesCount, setArticlesCount] = useState<number>(0);
 
@@ -35,7 +35,7 @@ const index: NextPage = () => {
   }, []);
 
   return (
-    <Layout>
+    <Layout user={props.userName}>
       <Stack spacing={2}>
         <Typography variant="h3" component="h3">
           All Posts

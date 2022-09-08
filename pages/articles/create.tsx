@@ -1,4 +1,5 @@
 import { Stack, Typography } from '@mui/material';
+import { NextPage } from 'next';
 import React from 'react';
 import EditArticle from '../../components/EditArticle';
 import Layout from '../../components/Layout';
@@ -8,9 +9,9 @@ export async function getServerSideProps(ctx: any) {
   return checkUser(ctx);
 }
 
-const create = () => {
+const create: NextPage<{ userName: string }> = (props) => {
   return (
-    <Layout>
+    <Layout user={props.userName}>
       <Stack spacing={3}>
         <Typography variant="h3" component="h3">
           Create Article

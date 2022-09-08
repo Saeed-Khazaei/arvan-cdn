@@ -6,12 +6,13 @@ import { useRouter } from 'next/router';
 import { Article } from '../../../models/articles';
 import EditArticle from '../../../components/EditArticle';
 import { checkUser } from '../../../utils/checkUser';
+import { NextPage } from 'next';
 
 export async function getServerSideProps(ctx: any) {
   return checkUser(ctx);
 }
 
-const EditSlug = () => {
+const EditSlug: NextPage<{ userName: string }> = (props) => {
   const router = useRouter();
   const { slug } = router.query;
 
@@ -56,7 +57,7 @@ const EditSlug = () => {
   }, [slug]);
 
   return (
-    <Layout>
+    <Layout user={props.userName}>
       {!slug || loading ? (
         'loading'
       ) : (

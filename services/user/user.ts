@@ -36,4 +36,12 @@ export default {
       throw error.response.data
     }
   },
+  async getUserClientData() {
+    try {
+      const res = await axios.get<UserResponse>(getUserNextApi)
+      return await res.data;
+    } catch (error: any) {
+      throw error.response.data
+    }
+  },
 }

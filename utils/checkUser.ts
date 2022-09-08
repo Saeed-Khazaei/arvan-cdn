@@ -6,18 +6,18 @@ export const checkUser = async (ctx: any, redirect: boolean = false, isLoginPage
   if (token) {
     try {
       const resp = await user.getUserData(`${token}`);
+      console.log('resp', resp)
       if (redirect) {
-
         return {
           redirect: {
             permanent: false,
             destination: `/articles`,
           },
-          props: {},
+          props: { userName: resp.user.username },
         };
       }
       return {
-        props: {}
+        props: { userName: resp.user.username }
       }
     } catch (error) {
       console.log('getServerSideProps error', error);
