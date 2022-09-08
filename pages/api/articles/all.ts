@@ -2,18 +2,20 @@ import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getAllArticlesUrl, postLoginUser } from '../../../utils/endpoints';
 import { ArticlesRespone } from '../../../models/articles';
+import { getCookie } from 'cookies-next';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log('first', getAllArticlesUrl)
+  const token = getCookie('userToken', { req, res })
   try {
     const { data } = await axios.get<ArticlesRespone>(getAllArticlesUrl,
       {
         headers: {
+          'Authorization': `Token ${token}`,
           'content-type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
+          'X-Requested-With': 'XMLHttpRequest',
         }
       }
     );
