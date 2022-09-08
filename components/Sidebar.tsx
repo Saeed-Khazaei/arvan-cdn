@@ -5,20 +5,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 
-const routes = [
-  { title: 'Categories', url: '/categories' },
-  { title: 'Templates', url: '/templates' },
-  {
-    title: 'Live renders',
-    url: '/support/live-renders',
-  },
-  { title: 'Videos', url: '/videos' },
-  { title: 'Renders', url: '/renders' },
-  { title: 'User', url: '/user' },
-];
-
 const Sidebar = () => {
   const router = useRouter();
+  console.log('router', router);
+  const isCreate = router.pathname == '/articles/create' ? true : false;
+  console.log('isCreate', isCreate);
   return (
     <Box
       sx={{
@@ -31,29 +22,41 @@ const Sidebar = () => {
         Posts
       </Typography>
       <Box>
-        <Link href="/">
-          <Typography
-            variant="h6"
-            component="div"
-            color="common.white"
-            sx={{ width: '100%', background: '#09f', cursor: 'pointer' }}
-            px={4}
-            py={1}
-          >
-            All Articles
-          </Typography>
+        <Link href="/articles">
+          <a>
+            <Typography
+              variant="h6"
+              component="div"
+              color="common.white"
+              sx={{
+                width: '100%',
+                background: isCreate ? 'inherit' : '#09f',
+                cursor: 'pointer',
+              }}
+              px={4}
+              py={1}
+            >
+              All Articles
+            </Typography>
+          </a>
         </Link>
-        <Link href="/">
-          <Typography
-            variant="h6"
-            component="div"
-            color="common.white"
-            sx={{ width: '100%', cursor: 'pointer' }}
-            px={4}
-            py={1}
-          >
-            New Article
-          </Typography>
+        <Link href="/articles/create">
+          <a>
+            <Typography
+              variant="h6"
+              component="div"
+              color="common.white"
+              sx={{
+                width: '100%',
+                background: !isCreate ? 'inherit' : '#09f',
+                cursor: 'pointer',
+              }}
+              px={4}
+              py={1}
+            >
+              New Article
+            </Typography>
+          </a>
         </Link>
       </Box>
     </Box>
