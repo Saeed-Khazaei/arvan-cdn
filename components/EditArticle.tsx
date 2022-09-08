@@ -21,6 +21,24 @@ const EditArticle = (props: {
 }) => {
   const router = useRouter();
   const [tagText, setTagText] = useState('');
+  const [errors, setErrors] = useState({
+    title: {
+      isError: false,
+      errorMessage: '',
+    },
+    description: {
+      isError: false,
+      errorMessage: '',
+    },
+    body: {
+      isError: false,
+      errorMessage: '',
+    },
+    tags: {
+      isError: false,
+      errorMessage: '',
+    },
+  });
   const [articleData, setArticleData] = useState<Article>({
     slug: '',
     title: '',
@@ -39,30 +57,13 @@ const EditArticle = (props: {
     },
   });
   const [tagsData, setTagsData] = useState<string[]>([]);
-  const onSubmit = async () => {
+  const onSubmit = () => {
     // setLoading(true);
-    let body: ArticleUpdate = {
-      title: articleData.title,
-      description: articleData.description,
-      body: articleData.body,
-      tagList: articleData.tagList,
-    };
-    if (props.slug) {
-      try {
-        const res = await articles.updateArticle(props.slug, {
-          ...body,
-        });
-        if (props.slug !== res.article.slug) {
-          router.push({
-            pathname: `/articles/edit/${res.article.slug}`,
-          });
-        }
-      } catch (error: any) {
-        // setLoading(false);
-        console.log('error', error.message);
-      }
+    if (props.create) {
+      onCreateArticle();
+    } else {
+      onUpdateArticle();
     }
-    return;
   };
 
   const onToggleTag = (
@@ -85,14 +86,17 @@ const EditArticle = (props: {
   };
 
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrors({ ...errors, title: { errorMessage: '', isError: false } });
     setArticleData({ ...articleData, title: e.target.value });
   };
 
   const onChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrors({ ...errors, description: { errorMessage: '', isError: false } });
     setArticleData({ ...articleData, description: e.target.value });
   };
 
   const onChangeBody = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrors({ ...errors, body: { errorMessage: '', isError: false } });
     setArticleData({ ...articleData, body: e.target.value });
   };
   const onChangeTagText = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,14 +125,90 @@ const EditArticle = (props: {
     }
   };
 
-  useEffect(() => {
-    fetchTags();
-  }, []);
+  const onUpdateArticle = async () => {
+    let body: ArticleUpdate = {
+      title: articleData.title,
+      description: articleData.description,
+      body: articleData.body,
+      tagList: articleData.tagList,
+    };
+    if (props.slug) {
+      try {
+        const res = await articles.updateArticle(props.slug, {
+          ...body,
+        });
+        if (props.slug !== res.article.slug) {
+          router.push({
+            pathname: `/articles/edit/${res.article.slug}`,
+          });
+        }
+      } catch (error: any) {
+        // setLoading(false);
+        if (error.title) {
+          setErrors({
+            ...errors,
+            title: { errorMessage: error.title[0], isError: true },
+          });
+        }
+        if (error.description) {
+          setErrors({
+            ...errors,
+            description: { errorMessage: error.description[0], isError: true },
+          });
+        }
+        if (error.body) {
+          setErrors({
+            ...errors,
+            body: { errorMessage: error.body[0], isError: true },
+          });
+        }
+        console.log('error', error.message);
+      }
+    }
+    return;
+  };
+  const onCreateArticle = async () => {
+    let body: ArticleUpdate = {
+      title: articleData.title,
+      description: articleData.description,
+      body: articleData.body,
+      tagList: articleData.tagList,
+    };
+    console.log('body', body);
+    try {
+      const res = await articles.postArticle({
+        ...body,
+      });
+      console.log('res onCreateArticle ', res);
+    } catch (error: any) {
+      // setLoading(false);
+      if (error.title) {
+        setErrors({
+          ...errors,
+          title: { errorMessage: error.title[0], isError: true },
+        });
+      }
+      if (error.description) {
+        setErrors({
+          ...errors,
+          description: { errorMessage: error.description[0], isError: true },
+        });
+      }
+      if (error.body) {
+        setErrors({
+          ...errors,
+          body: { errorMessage: error.body[0], isError: true },
+        });
+      }
+      console.log('error', error);
+    }
+    return;
+  };
 
   useEffect(() => {
+    fetchTags();
     setArticleData(props.articleData);
-    // setTagsData(props.tagsData);
-  }, [props.articleData]);
+  }, []);
 
   return (
     <>
@@ -141,8 +221,8 @@ const EditArticle = (props: {
             variant="outlined"
             type="text"
             fullWidth
-            error={false}
-            helperText={''}
+            error={errors.title.isError}
+            helperText={errors.title.isError && errors.title.errorMessage}
             placeholder="Title"
             value={articleData?.title ?? ''}
             onChange={onChangeTitle}
@@ -153,8 +233,10 @@ const EditArticle = (props: {
             variant="outlined"
             type="text"
             fullWidth
-            error={false}
-            helperText={''}
+            error={errors.description.isError}
+            helperText={
+              errors.description.isError && errors.description.errorMessage
+            }
             placeholder="Description"
             value={articleData?.description ?? ''}
             onChange={onChangeDescription}
@@ -165,10 +247,10 @@ const EditArticle = (props: {
             variant="outlined"
             type="text"
             fullWidth
-            error={false}
             multiline
             rows={10}
-            helperText={''}
+            error={errors.body.isError}
+            helperText={errors.body.isError && errors.body.errorMessage}
             value={articleData?.body ?? ''}
             onChange={onChangeBody}
           />

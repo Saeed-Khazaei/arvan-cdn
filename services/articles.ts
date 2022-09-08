@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Article, ArticlesRespone, ArticleUpdate } from "../models/articles";
-import { deleteArticleNextApi, getAllArticlesNextApi, getArticleNextApi, updateArticleNextApi } from "../utils/endpoints";
+import { deleteArticleNextApi, getAllArticlesNextApi, getArticleNextApi, postArticleNextApi, updateArticleNextApi } from "../utils/endpoints";
 
 export default {
   async getAllArticles() {
@@ -30,6 +30,15 @@ export default {
   async updateArticle(slug: string, body: ArticleUpdate) {
     try {
       const res = await axios.put<{ article: Article }>(`${updateArticleNextApi}?slug=${slug}`, { ...body });
+      return res.data;
+    } catch (error: any) {
+      console.log('error', error)
+      throw error.response.data
+    }
+  },
+  async postArticle(body: ArticleUpdate) {
+    try {
+      const res = await axios.post<{ article: Article }>(postArticleNextApi, { ...body });
       return res.data;
     } catch (error: any) {
       throw error.response.data
