@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '../../../components/Layout';
 import {
   Box,
@@ -13,8 +13,29 @@ import {
   Checkbox,
   Button,
 } from '@mui/material';
+import articles from '../../../services/articles';
+import { useRouter } from 'next/router';
 
 const EditSlug = () => {
+  const router = useRouter();
+  console.log('router', router);
+  const fetchArticle = async () => {
+    const { slug } = router.query;
+    if (slug && typeof slug == 'string') {
+      try {
+        const res = await articles.getArticle(slug);
+        console.log('res', res);
+      } catch (error: any) {
+        console.log('error', error.message);
+      }
+    }
+    return;
+  };
+
+  useEffect(() => {
+    fetchArticle();
+  }, []);
+
   return (
     <Layout>
       <Stack spacing={3}>

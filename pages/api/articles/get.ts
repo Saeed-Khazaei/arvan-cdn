@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { deleteArticleUrl, getAllArticlesUrl, postLoginUser } from '../../../utils/endpoints';
-import { ArticlesRespone } from '../../../models/articles';
+import { deleteArticleUrl, getAllArticlesUrl, getArticleUrl, postLoginUser } from '../../../utils/endpoints';
+import { Article, ArticlesRespone } from '../../../models/articles';
 import { getCookie } from 'cookies-next';
 
 export default async function handler(
@@ -12,7 +12,7 @@ export default async function handler(
   const slug = req.query.slug;
   console.log('slug', slug)
   try {
-    const { data } = await axios.delete(`${deleteArticleUrl}/${slug}`,
+    const { data } = await axios.get<Article>(`${getArticleUrl}/${slug}`,
       {
         headers: {
           'Authorization': `Token ${token}`,
