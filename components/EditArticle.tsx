@@ -133,7 +133,6 @@ const EditArticle = (props: {
   const fetchTags = async () => {
     try {
       const res = await tags.getTags();
-      console.log('res', res.tags);
       setTagsData(res.tags.sort());
     } catch (error: any) {
       console.log('error', error.message);
