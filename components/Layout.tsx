@@ -21,7 +21,7 @@ const Layout = (props: { children: React.ReactNode; user: string }) => {
       <Drawer anchor="left" open={openSidebar} onClose={(_) => toggleDrawer()}>
         <Sidebar />
       </Drawer>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ flexGrow: 1, width: '100%' }}>
         <AppBar position="static" sx={{ backgroundColor: 'common.black' }}>
           <Toolbar>
             <IconButton
@@ -40,7 +40,7 @@ const Layout = (props: { children: React.ReactNode; user: string }) => {
             >
               ☰
             </IconButton>
-            <Box sx={{ flexGrow: 1 }}>
+            <Box sx={{ flexGrow: 1, width: '100%' }}>
               <Stack
                 direction={{ sx: 'column', sm: 'row' }}
                 alignItems={{ sx: 'flex-start', sm: 'center' }}
@@ -75,7 +75,7 @@ const Layout = (props: { children: React.ReactNode; user: string }) => {
         >
           <Sidebar />
         </Box>
-        <Box sx={{ flex: 1 }} p={2}>
+        <Box sx={{ flex: 1, width: '100%' }} p={2}>
           {props.children}
         </Box>
       </Box>

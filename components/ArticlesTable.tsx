@@ -14,8 +14,8 @@ const ArticlesTable = () => {
   const articlesCtx = articlesContext();
 
   return (
-    <TableContainer>
-      <Table sx={{ width: '100%' }} aria-label="simple table">
+    <TableContainer sx={{ overflowX: 'auto', width: '100%' }}>
+      <Table>
         <TableHead>
           <TableRow>
             <TableCell sx={{ width: '80px' }}>#</TableCell>

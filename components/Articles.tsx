@@ -21,7 +21,7 @@ const Articles = () => {
         <Typography variant="h3" component="h3">
           All Posts
         </Typography>
-        <Box>
+        <Box sx={{ width: '100%' }}>
           <ArticlesTable />
         </Box>
         <Box
