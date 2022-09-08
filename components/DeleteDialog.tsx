@@ -10,6 +10,10 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import articles from '../services/articles';
+import { useState } from 'react';
+import { NotificationType } from '../models/notification';
+import Notification from './Notification';
+import articlesContext from '../context/articles/ArticlesContext';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -51,7 +55,17 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 };
 
 const DeleteDialog = (props: { id: string }) => {
+  const articlesCtx = articlesContext();
   const [open, setOpen] = React.useState(false);
+  const [showSnackBar, setSnackBar] = useState<NotificationType>({
+    open: false,
+    message: '',
+    mainMessage: '',
+    type: 'success',
+  });
+  const handleCloseSnackBar = () => {
+    setSnackBar({ open: false, message: '', mainMessage: '', type: 'error' });
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -63,6 +77,12 @@ const DeleteDialog = (props: { id: string }) => {
   const onDeleteArticle = async () => {
     try {
       const res = await articles.deleteArticle(props.id);
+      articlesCtx.setArticlesDelete(props.id);
+      setSnackBar({
+        open: true,
+        message: 'Article deleted successfly',
+        type: 'success',
+      });
       handleClose();
     } catch (error: any) {
       handleClose();
@@ -72,6 +92,13 @@ const DeleteDialog = (props: { id: string }) => {
 
   return (
     <div>
+      <Notification
+        open={showSnackBar.open}
+        message={showSnackBar.message}
+        mainMessage={showSnackBar.mainMessage}
+        type={showSnackBar.type}
+        onClose={handleCloseSnackBar}
+      />
       <MenuItem disableRipple onClick={handleClickOpen}>
         Delete
       </MenuItem>

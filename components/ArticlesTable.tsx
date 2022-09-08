@@ -8,8 +8,11 @@ import TableRow from '@mui/material/TableRow';
 import EditButton from './EditButton';
 import { Article } from '../models/articles';
 import { Stack } from '@mui/material';
+import articlesContext from '../context/articles/ArticlesContext';
 
-const ArticlesTable = (props: { articles: Article[] }) => {
+const ArticlesTable = () => {
+  const articlesCtx = articlesContext();
+
   return (
     <TableContainer>
       <Table sx={{ width: '100%' }} aria-label="simple table">
@@ -24,8 +27,8 @@ const ArticlesTable = (props: { articles: Article[] }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.articles.length > 0 &&
-            props.articles.map((row, index: number) => (
+          {articlesCtx.articles.length > 0 &&
+            articlesCtx.articles.map((row, index: number) => (
               <TableRow key={row.slug}>
                 <TableCell component="th" scope="row">
                   {index + 1}

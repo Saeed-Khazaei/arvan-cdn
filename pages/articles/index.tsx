@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import Layout from '../../components/Layout';
 import { checkUser } from '../../utils/checkUser';
 import Articles from '../../components/Articles';
+import ArticlesContextProvider from '../../context/articles/ArticlesProvider';
 
 export async function getServerSideProps(ctx: any) {
   return checkUser(ctx);
@@ -10,9 +11,11 @@ export async function getServerSideProps(ctx: any) {
 
 const index: NextPage<{ userName: string }> = (props) => {
   return (
-    <Layout user={props.userName}>
-      <Articles />
-    </Layout>
+    <ArticlesContextProvider>
+      <Layout user={props.userName}>
+        <Articles />
+      </Layout>
+    </ArticlesContextProvider>
   );
 };
 

@@ -30,3 +30,13 @@ export interface ArticleUpdate {
   body?: string;
   tagList?: string[];
 }
+
+export interface ArticlesIContextProps extends ArticlesRespone {
+  setArticlesData(data: ArticlesRespone): void;
+  setArticlesDelete(slug: string): void;
+}
+
+export interface ArticlesContextAction {
+  type: string;
+  payload: any;
+}
