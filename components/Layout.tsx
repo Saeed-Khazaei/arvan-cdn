@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Sidebar from './Sidebar';
 import Drawer from '@mui/material/Drawer';
+import Link from 'next/link';
 
 const Layout = (props: { children: React.ReactNode }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -47,9 +48,13 @@ const Layout = (props: { children: React.ReactNode }) => {
                 Welcome Saeed Khazaei
               </Typography>
             </Box>
-            <Button color="info" variant="outlined">
-              Logout
-            </Button>
+            <Link href="/login">
+              <a>
+                <Button color="info" variant="outlined">
+                  Logout
+                </Button>
+              </a>
+            </Link>
           </Toolbar>
         </AppBar>
       </Box>
