@@ -3,8 +3,10 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Register from '../components/Register';
 import { checkUser } from '../utils/checkUser';
+import { deleteCookie } from 'cookies-next';
 
 export async function getServerSideProps(ctx: any) {
+  deleteCookie('userToken', { req: ctx.req, res: ctx.res });
   return checkUser(ctx, true, true);
 }
 
