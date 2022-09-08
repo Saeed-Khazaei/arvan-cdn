@@ -2,6 +2,11 @@ import { Stack, Typography } from '@mui/material';
 import React from 'react';
 import EditArticle from '../../components/EditArticle';
 import Layout from '../../components/Layout';
+import { checkUser } from '../../utils/checkUser';
+
+export async function getServerSideProps(ctx: any) {
+  return checkUser(ctx);
+}
 
 const create = () => {
   return (

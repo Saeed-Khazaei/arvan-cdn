@@ -4,6 +4,7 @@ import { api_url, next_url } from "./constants";
 // User
 export const postRegisterUser = `${api_url}/users`;
 export const postLoginUser = `${api_url}/users/login`;
+export const getUser = `${api_url}/user`;
 // Articles
 export const getAllArticlesUrl = `${api_url}/articles`;
 export const deleteArticleUrl = `${api_url}/articles`;
@@ -16,6 +17,7 @@ export const getTagsUrl = `${api_url}/tags`;
 // User
 export const postRegisterUserNextApi = `${next_url}/api/user/register`;
 export const postLoginUserNextApi = `${next_url}/api/user/login`;
+export const getUserNextApi = `${next_url}/api/user/get`;
 // Articles
 export const getAllArticlesNextApi = `${next_url}/api/articles/all`;
 export const deleteArticleNextApi = `${next_url}/api/articles/delete`;

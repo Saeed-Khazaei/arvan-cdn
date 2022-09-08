@@ -1,7 +1,10 @@
-import Button from '@mui/material/Button';
 import type { NextPage } from 'next';
 import Layout from '../components/Layout';
-import styles from '../styles/Home.module.css';
+import { checkUser } from '../utils/checkUser';
+
+export async function getServerSideProps(ctx: any) {
+  return checkUser(ctx, true);
+}
 
 const Home: NextPage = () => {
   return <Layout>index</Layout>;

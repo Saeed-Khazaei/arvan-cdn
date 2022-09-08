@@ -7,9 +7,7 @@ import React from 'react';
 
 const Sidebar = () => {
   const router = useRouter();
-  console.log('router', router);
   const isCreate = router.pathname == '/articles/create' ? true : false;
-  console.log('isCreate', isCreate);
   return (
     <Box
       sx={{

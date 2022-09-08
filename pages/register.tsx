@@ -1,8 +1,12 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Login from '../components/Login';
 import Register from '../components/Register';
+import { checkUser } from '../utils/checkUser';
+
+export async function getServerSideProps(ctx: any) {
+  return checkUser(ctx, true, true);
+}
 
 const login = () => {
   return (

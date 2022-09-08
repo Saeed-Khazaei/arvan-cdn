@@ -5,6 +5,11 @@ import articles from '../../../services/articles';
 import { useRouter } from 'next/router';
 import { Article } from '../../../models/articles';
 import EditArticle from '../../../components/EditArticle';
+import { checkUser } from '../../../utils/checkUser';
+
+export async function getServerSideProps(ctx: any) {
+  return checkUser(ctx);
+}
 
 const EditSlug = () => {
   const router = useRouter();

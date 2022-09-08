@@ -5,6 +5,11 @@ import Layout from '../../components/Layout';
 import { Article } from '../../models/articles';
 import articles from '../../services/articles';
 import ArticlesTable from '../../components/ArticlesTable';
+import { checkUser } from '../../utils/checkUser';
+
+export async function getServerSideProps(ctx: any) {
+  return checkUser(ctx);
+}
 
 const index: NextPage = () => {
   const [articlesData, setArticlesData] = useState<Article[]>([]);
