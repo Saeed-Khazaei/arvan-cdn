@@ -34,7 +34,7 @@ const ArticlesTable = (props: { articles: Article[] }) => {
                 <TableCell>@{row.author.username}</TableCell>
                 <TableCell>
                   {row.tagList.map((t, index: number) => (
-                    <span>
+                    <span key={t}>
                       {t}
                       {row.tagList.length - 1 == index ? '' : ', '}
                     </span>

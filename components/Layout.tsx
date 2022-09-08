@@ -12,7 +12,6 @@ import { Stack } from '@mui/material';
 
 const Layout = (props: { children: React.ReactNode; user: string }) => {
   const [openSidebar, setOpenSidebar] = useState(false);
-  console.log('props.user', props.user);
   const toggleDrawer = () => {
     setOpenSidebar(!openSidebar);
   };

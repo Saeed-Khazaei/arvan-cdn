@@ -8,11 +8,22 @@ import {
   FormControlLabel,
   Checkbox,
   Button,
+  Snackbar,
+  Typography,
+  CircularProgress,
 } from '@mui/material';
 import { Article, ArticleUpdate } from '../models/articles';
 import articles from '../services/articles';
 import { useRouter } from 'next/router';
 import tags from '../services/tags';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const EditArticle = (props: {
   articleData: Article;
@@ -20,7 +31,21 @@ const EditArticle = (props: {
   create: boolean;
 }) => {
   const router = useRouter();
+  const [showSnackBar, setSnackBar] = useState({
+    open: false,
+    message: '',
+  });
+  const handleCloseSnackBar = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackBar({ open: false, message: '' });
+  };
   const [tagText, setTagText] = useState('');
+  const [loadingOnSave, setLoadingOnSave] = useState(false);
   const [errors, setErrors] = useState({
     title: {
       isError: false,
@@ -133,9 +158,15 @@ const EditArticle = (props: {
       tagList: articleData.tagList,
     };
     if (props.slug) {
+      setLoadingOnSave(true);
       try {
         const res = await articles.updateArticle(props.slug, {
           ...body,
+        });
+        setLoadingOnSave(false);
+        setSnackBar({
+          open: true,
+          message: 'Article updated successfly',
         });
         if (props.slug !== res.article.slug) {
           router.push({
@@ -143,7 +174,7 @@ const EditArticle = (props: {
           });
         }
       } catch (error: any) {
-        // setLoading(false);
+        setLoadingOnSave(false);
         if (error.title) {
           setErrors({
             ...errors,
@@ -174,14 +205,18 @@ const EditArticle = (props: {
       body: articleData.body,
       tagList: articleData.tagList,
     };
-    console.log('body', body);
     try {
+      setLoadingOnSave(true);
       const res = await articles.postArticle({
         ...body,
       });
-      console.log('res onCreateArticle ', res);
+      setLoadingOnSave(false);
+      setSnackBar({
+        open: true,
+        message: 'Article created successfly',
+      });
     } catch (error: any) {
-      // setLoading(false);
+      setLoadingOnSave(false);
       if (error.title) {
         setErrors({
           ...errors,
@@ -212,7 +247,23 @@ const EditArticle = (props: {
 
   return (
     <>
-      {' '}
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={showSnackBar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackBar}
+      >
+        <Alert
+          onClose={handleCloseSnackBar}
+          severity="success"
+          sx={{ width: '100%' }}
+        >
+          <Typography variant="body1" component="span">
+            Well done!
+          </Typography>{' '}
+          {showSnackBar.message}
+        </Alert>
+      </Snackbar>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={6}>
         <Stack sx={{ flex: 9 }} spacing={3}>
           <TextField
@@ -302,8 +353,13 @@ const EditArticle = (props: {
         size="large"
         sx={{ maxWidth: 'max-content' }}
         onClick={onSubmit}
+        disabled={loadingOnSave}
       >
-        Submit
+        {loadingOnSave ? (
+          <CircularProgress size="22px" color="inherit" />
+        ) : (
+          'Submit'
+        )}
       </Button>
     </>
   );
