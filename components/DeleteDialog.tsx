@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
+import articles from '../services/articles';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -61,9 +62,10 @@ const DeleteDialog = (props: { id: string }) => {
 
   const onDeleteArticle = async () => {
     try {
-      console.log('props.id', props.id);
+      const res = await articles.deleteArticle(props.id);
       handleClose();
     } catch (error: any) {
+      handleClose();
       console.log('error', error.message);
     }
   };
