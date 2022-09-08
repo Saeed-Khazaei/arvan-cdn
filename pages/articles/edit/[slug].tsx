@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import articles from '../../../services/articles';
 import { useRouter } from 'next/router';
+import tags from '../../../services/tags';
 
 const EditSlug = () => {
   const router = useRouter();
@@ -32,8 +33,18 @@ const EditSlug = () => {
     return;
   };
 
+  const fetchTags = async () => {
+    try {
+      const res = await tags.getTags();
+      console.log('res tags', res);
+    } catch (error: any) {
+      console.log('error', error.message);
+    }
+  };
+
   useEffect(() => {
     fetchArticle();
+    fetchTags();
   }, []);
 
   return (
